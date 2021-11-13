@@ -1,7 +1,7 @@
 import os
 import shutil
 
-origin='F:\\1 - Hoc tap\\BT NMLT Lan 3\\BTVN'
+origin='F:\\1 - Hoc tap\\First year\\first-year-university-coding\\BT NMLT Lan 3\\BTVN'
 
 os.chdir(origin)
 
