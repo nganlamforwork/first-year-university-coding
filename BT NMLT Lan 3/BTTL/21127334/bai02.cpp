@@ -68,7 +68,7 @@ int main()
                 }
             }
         }
-        if (month==1) {
+        if (preMonth==0) {
             preYear=year-1;
             preMonth=12;
         }
