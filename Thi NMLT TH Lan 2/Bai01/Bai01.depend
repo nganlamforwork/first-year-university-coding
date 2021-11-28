@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1637996901 source:f:\1 - hoc tap\nmlt\bai01\main.cpp
+	<iostream>
+	<iomanip>
+	<string>
+	<string.h>
+
