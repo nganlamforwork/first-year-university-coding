@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1639026965 source:f:\1 - hoc tap\nmlt\writemultiplefiles\main.cpp
+	<fstream>
+	<iostream>
+
