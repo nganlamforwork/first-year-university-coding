@@ -11,7 +11,8 @@ void input(SinhVien &x){
     cout<<"Nhap ID: ";
     cin>>x.ID;
     cout<<"Nhap ten: ";
-    cin>>x.name;
+    cin.ignore();
+    getline(cin,x.name,'\n');
     cout<<"Nhap diem Toan: ";
     cin>>x.Toan;
     cout<<"Nhap diem Ly: ";
