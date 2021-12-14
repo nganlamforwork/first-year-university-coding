@@ -13,7 +13,7 @@ int main() {
     cout<<"Input: ";
     cin>>a>>b;
     a=abs(a); b=abs(b);
-    int BCNN = a*b;
+    long long BCNN = (long long) a*b;
     while (b!=0 && a!=0){
         if (a<b) swap(a,b);
         cout<<a<<" = "<<a/b<<"."<<b<<" + "<<a%b<<'\n';
@@ -24,7 +24,7 @@ int main() {
     }
     
     cout<<"\nUCLN = "<<a<<'\n';
-    cout<<"BCNN = "<<BCNN/a<<'\n';
+    cout<<"BCNN = "<<BCNN/(long long)a<<'\n';
     
     Data tmp=save[save.size()-2];
     
