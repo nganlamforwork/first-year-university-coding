@@ -18,7 +18,7 @@ int printSource(char input[])
 }
 int main()
 {
-    char input[]="input.txt";
+    char input[]="bai04.cpp";
     printSource(input);
     return 0;
 }
