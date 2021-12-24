@@ -1,0 +1,11 @@
+MaHS	HoDem	Ten	NgaySinh	GioiTinh	DiaChi
+1	Nguyen Gia	Bao	03/11/2000	N	11 Bui Vien
+2	Chau Khon	Cuong	08/06/2001	N	145 Nguyen Trai
+3	Ly Minh 	Duc	01/05/2000	N	20 CMT8
+4	Truong Thi Cam 	Hong	30/01/2000	Y	155 Le Lai
+5	Huynh Van 	Huy	23/08/2000	N	23 Lac Long Quan
+6	Lam Nguyen Hoang 	Huy	22/12/2000	N	25 Au Cơ
+7	Đoan Đăng 	Khoa	29/11/2000	N	123 Le Lai
+8	Lam Qui		Loc	08/03/2000	N	19 Bui Vien
+9	Pham Kim 	Ngoc	10/11/2000	Y	16 Au Cơ
+10	Thach Vu Thuy 	Quang	30/09/2000	Y	146 CMT8
