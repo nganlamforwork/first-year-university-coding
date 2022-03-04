@@ -51,16 +51,21 @@ int* countEvens(int* arr, int n, int *evens)
 }
 int* genEvenSubarray(int* arr, int n, int* count)
 {
-    int b[n+1];
+    int b[n+1] = {};
     *count = 0;
     for (int i=1;i<=n;i++)
         if (arr[i]%2==0){
-            evens[++ans] = arr[i];
+            b[++(*count)] = arr[i];
         }
-    return b;
+    cout<<*count<<'\n';
+    printArray(b,*count);
+    int *ans = b;
+    return ans;
 }
 int main()
 {
-    int a[6]={0,1,2,3,5,6}, b[6]={};
+    int a[6]={0,1,2,3,5,6};
+    int ans = 0;
+    printArray(genEvenSubarray(a,5,&ans),ans);
     return 0;
 }
