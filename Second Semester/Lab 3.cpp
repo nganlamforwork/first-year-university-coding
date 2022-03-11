@@ -54,13 +54,14 @@ int* countEvens(int* arr, int n, int* evens)
             evens[(*cnt)++]=arr[i];
     return cnt;
 }
-int* genEvenSubarray(int* arr, int n, int* count)
+int* genEvenSubarray(int* arr, int n, int * count)
 {
-    int *ans = new int[n];
+    count = new int[n];
+    int cnt = 0;
     for (int i=0;i<n;i++)
         if (arr[i]%2==0)
-            ans[(*count)++]=arr[i];
-    return ans;
+            *(count+(cnt++))=*(arr+i);
+    return count;
 }
 int* findLargestTotalSubarray(int* a, int n, int &total, int &length)
 {
@@ -198,7 +199,8 @@ int main()
 //    generateMatrix1((int**)a,n,m);
     //swapRows((int**)a,n,m);
     int a[]={1,2,3,4,5};
+    int evens[] = {};
     int n=5;
-    printArray(copyArray(a,n),n);
+    printArray(genEvenSubarray(a,n,evens),2);
     return 0;
 }
