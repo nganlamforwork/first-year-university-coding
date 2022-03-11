@@ -3,13 +3,14 @@
 #include <string>
 #include <sstream>
 #include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 void swap(int* a, int* b)
 {
     int * tmp = new int;
-    tmp = a;
-    a = b;
-    b = tmp;
+    *tmp = *a;
+    *a = *b;
+    *b = *tmp;
     delete tmp;
 }
 int* sum(int* a, int* b)
@@ -32,6 +33,7 @@ void printArray(int* a, int n)
 int* findMax(int* arr, int n)
 {
     int * ans = new int;
+    *ans = 0;
     for (int i=0;i<n;i++)
         *ans = max(*ans,arr[i]);
     return ans;
@@ -39,7 +41,8 @@ int* findMax(int* arr, int n)
 int* copyArray(int* arr, int n)
 {
     int * ans = new int[n];
-    *ans = *arr;
+    for (int i=0;i<n;i++)
+        *(ans+i) = *(arr+i);
     return ans;
 }
 int* countEvens(int* arr, int n, int* evens)
@@ -131,12 +134,71 @@ int* merge2Arrays(int* a, int* b, int na, int nb, int&nc)
     sort(ans,ans+nc);
     return ans;
 }
+void generateMatrix1(int** A, int &length, int &width)
+{
+    srand(time(NULL));
+//    length = rand()%10;
+//    width = rand()%10;
+    for (int i=0;i<length;i++)
+        for (int j=0;j<width;j++)
+            A[i][j] = rand()%100;
+
+    //cout
+    for (int i=0;i<length;i++){
+        for (int j=0;j<width;j++)
+            cout<<A[i][j]<<' ';
+        cout<<'\n';
+    }
+}
+int** generateMatrix2(int* a, int* b, int na, int nb)
+{
+    int **ans;
+    ans = new int* [nb];
+    for (int i=0;i<na;i++)
+        for (int j=0;j<nb;j++)
+            ans[i][j]=a[i]*b[j];
+    return ans;
+}
+void swapRows(int** a, int length, int width)
+{
+    int *tmpRow1, *tmpRow2;
+    tmpRow1 = a[0];
+    tmpRow2 = a[1];
+
+    //swap
+    int *tmpRow = new int[length];
+    *tmpRow = *tmpRow1;
+    *tmpRow1 = *tmpRow2;
+    *tmpRow2 = *tmpRow;
+    //cout
+    for (int i=0;i<length;i++){
+        for (int j=0;j<width;j++)
+            cout<<a[i][j]<<' ';
+        cout<<'\n';
+    }
+}
+void swapColumns(int** a, int length, int width)
+{
+
+}
+int** transposeMatrix(int** a, int length, int width) {
+    for(int i=0; i<width; i++) {
+        for(int j=0; j<length/2; j++) {
+            int tmp = *(*(a+i)+j);
+            *(*(a+i)+j) = *(*(a+i)+length-j-1);
+            *(*(a+i)+length-j-1) = tmp;
+        }
+    }
+    return a;
+}
 int main()
 {
-    int a[5]={1,2,2,0,-1};
-    int b[6]={9,8,7,6,5,4};
-    int sizeC=0;
-    int *c = merge2Arrays(a,b,5,6,sizeC);
-    printArray(c,sizeC);
+//    int a[20][20];
+//    int n=5, m=6;
+//    generateMatrix1((int**)a,n,m);
+    //swapRows((int**)a,n,m);
+    int a[]={1,2,3,4,5};
+    int n=5;
+    printArray(copyArray(a,n),n);
     return 0;
 }
