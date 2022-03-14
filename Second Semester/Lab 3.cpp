@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <bits/stdc++.h>
 using namespace std;
-void swap(int* a, int* b)
+void Swap(int*& a, int*& b)
 {
     int * tmp = new int;
     *tmp = *a;
@@ -23,19 +23,19 @@ void inputArray(int* a, int &n)
 {
     cin>>n;
     for (int i=0;i<n;i++)
-        cin>>a[i];
+        cin>>*(a+i);
 }
 void printArray(int* a, int n)
 {
     for (int i=0;i<n;i++)
-        cout<<a[i]<<' ';
+        cout<<*(a+i)<<' ';
 }
 int* findMax(int* arr, int n)
 {
     int * ans = new int;
     *ans = 0;
     for (int i=0;i<n;i++)
-        *ans = max(*ans,arr[i]);
+        *ans = max(*ans,*(arr+i));
     return ans;
 }
 int* copyArray(int* arr, int n)
@@ -107,21 +107,25 @@ int* findLongestAscendingSubarray(int* a, int n, int &length)
         }
     return ans;
 }
+
 void swapArrays(int* a, int* b, int &na, int &nb)
 {
     int * tmp = new int[max(na,nb)];
-    *tmp = *a;
-    *a = *b;
-    *b = *tmp;
+    for (int i=0;i<na;i++)
+        *(tmp+i)=*(a+i);
+    for (int i=0;i<nb;i++)
+        *(a+i)=*(b+i);
+    for (int i=0;i<na;i++)
+        *(b+i)=*(tmp+i);
     swap(na,nb);
 }
 int* concatenate2Arrays(int* a, int* b, int na, int nb)
 {
     int * ans = new int[na+nb];
     for (int i=0;i<na;i++)
-        ans[i]=a[i];
+        *(ans+i)=a[i];
     for (int j=0;j<nb;j++)
-        ans[na+j]=b[j];
+        *(ans+na+j)=b[j];
     return ans;
 }
 int* merge2Arrays(int* a, int* b, int na, int nb, int&nc)
@@ -129,24 +133,25 @@ int* merge2Arrays(int* a, int* b, int na, int nb, int&nc)
     nc=na+nb;
     int * ans = new int[nc];
     for (int i=0;i<na;i++)
-        ans[i]=a[i];
+        *(ans+i)=a[i];
     for (int j=0;j<nb;j++)
-        ans[na+j]=b[j];
+        *(ans+na+j)=b[j];
     sort(ans,ans+nc);
     return ans;
 }
 void generateMatrix1(int** A, int &length, int &width)
 {
-    srand(time(NULL));
 //    length = rand()%10;
 //    width = rand()%10;
-    for (int i=0;i<length;i++)
-        for (int j=0;j<width;j++)
+    for (int i=0;i<width;i++){
+        A[i]=new int[length];
+        for (int j=0;j<length;j++)
             A[i][j] = rand()%100;
+    }
 
     //cout
-    for (int i=0;i<length;i++){
-        for (int j=0;j<width;j++)
+    for (int i=0;i<width;i++){
+        for (int j=0;j<length;j++)
             cout<<A[i][j]<<' ';
         cout<<'\n';
     }
@@ -160,27 +165,38 @@ int** generateMatrix2(int* a, int* b, int na, int nb)
             ans[i][j]=a[i]*b[j];
     return ans;
 }
-void swapRows(int** a, int length, int width)
+void swapRows(int** a, int length, int width, int rowX, int rowY)
 {
     int *tmpRow1, *tmpRow2;
-    tmpRow1 = a[0];
-    tmpRow2 = a[1];
+    tmpRow1 = a[rowX];
+    tmpRow2 = a[rowY];
 
-    //swap
-    int *tmpRow = new int[length];
-    *tmpRow = *tmpRow1;
-    *tmpRow1 = *tmpRow2;
-    *tmpRow2 = *tmpRow;
-    //cout
     for (int i=0;i<length;i++){
-        for (int j=0;j<width;j++)
+        int * x = tmpRow1 + i;
+        int * y = tmpRow2 + i;
+
+        Swap(x,y);
+    }
+    //cout
+    for (int i=0;i<width;i++){
+        for (int j=0;j<length;j++)
             cout<<a[i][j]<<' ';
         cout<<'\n';
     }
 }
-void swapColumns(int** a, int length, int width)
+void swapColumns(int** a, int length, int width, int colX, int colY)
 {
-
+    for (int i=0;i<width;i++){
+        int *x = *(a+i)+colX;
+        int *y = *(a+i)+colY;
+        Swap(x,y);
+    }
+    //cout
+    for (int i=0;i<width;i++){
+        for (int j=0;j<length;j++)
+            cout<<a[i][j]<<' ';
+        cout<<'\n';
+    }
 }
 int** transposeMatrix(int** a, int length, int width) {
     for(int i=0; i<width; i++) {
@@ -190,17 +206,89 @@ int** transposeMatrix(int** a, int length, int width) {
             *(*(a+i)+length-j-1) = tmp;
         }
     }
+    for (int i=0;i<width;i++){
+        for (int j=0;j<length;j++)
+            cout<<a[i][j]<<' ';
+        cout<<'\n';
+    }
     return a;
+}
+int** concatenate2MatricesH(int** a, int** b, int length, int width)
+{
+    int **c = new int*[width];
+    for (int i=0;i<width;i++){
+        c[i]=new int[length*2];
+        for (int j=0;j<length;j++)
+            c[i][j]=a[i][j];
+        for (int j=0;j<length;j++)
+            c[i][width+j]=b[i][j];
+    }
+    //cout
+    for (int i=0;i<width;i++){
+        for (int j=0;j<length*2;j++)
+            cout<<c[i][j]<<' ';
+        cout<<'\n';
+    }
+    return c;
+}
+int** concatenate2MatricesV(int** a, int** b, int length, int width)
+{
+    int **c = new int*[width*2];
+    for (int i=0;i<width;i++){
+        c[i]=new int[length*2];
+        for (int j=0;j<length;j++)
+            c[i][j]=a[i][j];
+    }
+    for (int i=0;i<width;i++){
+        c[width+i]=new int[length*2];
+        for (int j=0;j<length;j++)
+            c[width+i][j]=b[i][j];
+    }
+    //cout
+    for (int i=0;i<width*2;i++){
+        for (int j=0;j<length;j++)
+            cout<<c[i][j]<<' ';
+        cout<<'\n';
+    }
+    return c;
+}
+bool multiple2Matrices(int** a, int** b, int lengtha, int widtha, int lengthb, int widthb)
+{
+    //width = n     length = m
+    if (lengtha!=widthb) return 0;
+
+    int lengthc = lengthb, widthc = widtha;
+    int **c = new int*[widthc];
+
+    for (int i=0;i<widthc;i++){
+        c[i]=new int[lengthc];
+        for (int j=0;j<lengthc;j++){
+            c[i][j]=0;
+            for (int k=0;k<lengtha;k++)
+                c[i][j]+=a[i][k]+b[k][j];
+        }
+    }
+    //cout
+    for (int i=0;i<widthc;i++){
+        for (int j=0;j<lengthc;j++)
+            cout<<c[i][j]<<' ';
+        cout<<'\n';
+    }
+    return 1;
+}
+int** findSubmatrix(int** a, int length, int width, int &length_, int &width_)
+{
+
 }
 int main()
 {
-//    int a[20][20];
-//    int n=5, m=6;
-//    generateMatrix1((int**)a,n,m);
-    //swapRows((int**)a,n,m);
-    int a[]={1,2,3,4,5};
-    int evens[] = {};
-    int n=5;
-    printArray(genEvenSubarray(a,n,evens),2);
+    int **a = new int*[10], **b = new int*[10];
+    int n=5,m=5;
+    srand(time(NULL));
+    generateMatrix1(a,m,n);
+    cout<<'\n';
+    generateMatrix1(b,m,n);
+    cout<<'\n';
+    multiple2Matrices(a,b,m,n,m,n);
     return 0;
 }
