@@ -1,13 +1,13 @@
 #include <iostream>
-
+#include <ctime>
 using namespace std;
 struct Node{
     int key;
     Node* p_next;
 };
 struct List{
-    Node* p_head;
-    Node* p_tail;
+    Node* p_head = nullptr;
+    //Node* p_tail = nullptr;
 };
 Node* createNode(int data)
 {
@@ -55,12 +55,19 @@ void removeTail(Node* &pHead)
 }
  void removeAll(Node* &pHead)
 {
-    pHead->p_next=nullptr;
+    Node *p = pHead;
+    Node *tmp;
+    while (p!=nullptr){
+        tmp = p;
+        p=p->p_next;
+        delete tmp;
+    }
+    pHead = nullptr;
 }
 bool addPos(Node* &pHead, int data, int pos)
 {
     if (pos == 0 || pHead == nullptr){
-        pHead = addHead(pHead,data);
+        addHead(pHead,data);
         return 1;
     }
 
@@ -117,17 +124,78 @@ int countAppearance(Node* &pHead, int value)
     Node *p = pHead;
     int cnt=0;
     while (p!=nullptr){
-        cnt+=p->key;
+        cnt+=(p->key)==value;
         p=p->p_next;
     }
     return cnt;
 }
-Node* reverseList(Node* &pHead)
+List* reverseList(Node* &pHead)
 {
+    List *newList = new List;
 
+    Node *p = pHead;
+    while (p!=nullptr){
+        addHead(newList->p_head,p->key);
+        p=p->p_next;
+    }
+
+    return newList;
+}
+void removeDuplicate(Node* &pHead)
+{
+    Node *i, *j, *dup;
+    i = pHead;
+    while (i!=nullptr && i->p_next!=nullptr){
+        j = i;
+        while (j->p_next!=nullptr){
+            if (i->key==j->p_next->key){
+                dup=j->p_next;
+                j->p_next=j->p_next->p_next;
+                delete dup;
+            }
+            else
+                j=j->p_next;
+        }
+        i=i->p_next;
+    }
+}
+bool removeElement(Node* &pHead, int key)
+{
+    Node *i, *tmp;
+    i=pHead;
+    while (pHead!=nullptr && pHead->key == key){
+        removeHead(pHead);
+    }
+    while (i!=nullptr && i->p_next!=nullptr){
+        if (i->p_next->key == key){
+            tmp=i->p_next;
+            i->p_next=i->p_next->p_next;
+            delete tmp;
+        }
+        else
+            i=i->p_next; //tricky
+    }
+    return 0;
 }
 int main()
 {
-    cout << "Hello world!" << endl;
+    List *listNumber = new List;
+
+    srand(time(NULL));
+    int n=rand()%20;
+    for (int i=0;i<n;i++)
+        addTail(listNumber->p_head,rand()%5);
+
+    cout<<"Before: ";
+    printList(listNumber->p_head);
+    cout<<'\n';
+
+    int m = rand()%5;
+    cout<<"Remove: "<<m<<'\n';
+
+    cout<<"After: ";
+    removeElement(listNumber->p_head,m);
+    printList(listNumber->p_head);
+
     return 0;
 }
