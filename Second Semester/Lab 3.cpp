@@ -323,3 +323,94 @@ int main()
 	cout<<"\nLength: " << length;
 	return 0;
 }
+
+
+#include <iostream>
+//#include <cstdio>
+//#include <ctime>
+//
+//int** findSubmatrix(int** a, int length, int width, int &length_, int &width_)
+//{
+//	int max = 0, maxR1 = -1, maxC1 = -1, maxR2 = -1, maxC2 = -1;
+//
+//	int **ans = new int*[length];
+//	for (int i = 0; i < length; i++)
+//		ans[i] = new int[width];
+//
+//	int **sum = new int*[length];
+//	for (int i = 0; i < length; i++)
+//		sum[i] = new int[width];
+//
+//	//Calculate sum 2D array
+//	for (int i = 0; i < width; i++)
+//		sum[0][i] = (i == 0 ? 0 : sum[0][i - 1]) + a[0][i];
+//	for (int i = 0; i < length; i++)
+//		sum[i][0] = (i == 0 ? 0 : sum[i - 1][0]) + a[i][0];
+//
+//
+//	for (int i = 1; i < length; i++)
+//		for (int j = 1; j < width; j++)
+//			sum[i][j] = sum[i - 1][j] + sum[i][j - 1] - sum[i - 1][j - 1] + a[i][j];
+//
+//	//End calculate sum 2D array
+//
+//	for (int r1 = 0; r1 < length; r1++)
+//		for (int c1 = 0; c1 < width; c1++)
+//			for (int r2 = r1; r2 < length; r2++)
+//				for (int c2 = 0; c2 < width; c2++){
+//					if (c2 < c1) continue;
+//
+//					int tmp = sum[r2][c2];
+//					tmp -= (r1 == 0 ? 0 : sum[r1 - 1][c2]);
+//					tmp -= (c1 == 0 ? 0 : sum[r2][c1 - 1]);
+//					tmp += (r1 == 0 || c1 == 0) ? 0 : sum[r1 - 1][c1 - 1];
+//
+//					if (tmp > max) {
+//						max = tmp;
+//						maxR1 = r1, maxC1 = c1;
+//						maxR2 = r2, maxC2 = c2;
+//					}
+//				}
+//	std::cout << "-----------------------\n";
+//	std::cout << "Ans: " << max << '\n';
+//	std::cout << maxR1 << ' ' << maxC1 << ' ' << maxR2 << ' ' << maxC2 << '\n';
+//	std::cout << "-----------------------\n";
+//
+//	if (maxR1 == -1 || maxR2 == -1 || maxC1 == -1 || maxC2 == -1) return ans;
+//
+//	length_ = maxR2 - maxR1 + 1;
+//	width_ = maxC2 - maxC1 + 1;
+//	for (int i = 0; i < length_; i++){
+//		for (int j = 0; j < width_; j++)
+//			ans[i][j] = a[i + maxR1][j + maxC1];
+//	}
+//
+//	return ans;
+//}
+//int main()
+//{
+//	int length = 2, width = 3, length_ = 0, width_ = 0;
+//	int **a = new int*[length];
+//	for (int i = 0; i < length; i++)
+//		a[i] = new int[width];
+//	
+//	srand(time(NULL));
+//
+//	for (int i = 0; i < length; i++){
+//		for (int j = 0; j < width; j++){
+//			a[i][j] = rand() % 10 - rand() % 10;
+//			std::cout << a[i][j] << ' ';
+//		}
+//		std::cout << '\n';
+//	}
+//
+//	int ** ans = findSubmatrix(a, length, width, length_, width_);
+//
+//	for (int i = 0; i < length_; i++){
+//		for (int j = 0; j < width_; j++)
+//			std::cout << ans[i][j] << ' ';
+//		std::cout << '\n';
+//	}
+//
+//	return 0;
+//}
