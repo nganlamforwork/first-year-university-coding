@@ -89,7 +89,7 @@ void printCities(City C)
     }
 }
 
-void removeCity (City C, int X)
+void removeCity (City& C, int X)
 {
     NODE* curGreater=nullptr;
 
@@ -104,6 +104,7 @@ void removeCity (City C, int X)
     }
 
     NODE* tmp=curGreater->next;
+    if(tmp==C.tail) C.tail=curGreater;
     curGreater->next=curGreater->next->next;
     delete tmp;
 }
