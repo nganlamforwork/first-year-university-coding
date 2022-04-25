@@ -5,11 +5,10 @@ using namespace std;
 void createBINfile()
 {
     int n;
-    float degree, coefficient;
+    int degree, coefficient;
     ifstream in("POLY.TXT");
     ofstream out("POLY.BIN",ios::binary);
-    while (!in.eof()){
-        in>>n;
+    while (in>>n){
         out.write(reinterpret_cast<char *> (&n), sizeof(n));
         for (int i=1;i<=n;i++){
             in>>degree>>coefficient;
@@ -22,11 +21,11 @@ void createBINfile()
 void readBINfile()
 {
     int n;
-    float degree, coefficient;
+    int degree, coefficient;
     ifstream in("POLY.BIN",ios::binary);
     while (!in.eof()){
-        in.read(reinterpret_cast<char *> (&n), sizeof(n));
-        cout<<n<<'\n';
+        if (in.read(reinterpret_cast<char *> (&n), sizeof(n)))
+            cout<<n<<'\n';
         if (in.eof()) break;
         for (int i=1;i<=n;i++){
             in.read(reinterpret_cast<char *> (&degree), sizeof(degree));
