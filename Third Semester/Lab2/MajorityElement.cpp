@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 using namespace std;
-void Majority_Element_Sol_1(int a[], int n)
+void MajorityElementSol1(int a[], int n)
 {
 	for (int i = 0; i < n; i++){
 		int cnt = 1;
@@ -15,7 +15,7 @@ void Majority_Element_Sol_1(int a[], int n)
 	}
 	cout << "NO";
 }
-void Majority_Element_Sol_2(int a[], int n)
+void MajorityElementSol2(int a[], int n)
 {
 	int cnt[100];
 	for (int i = 0; i < n; i++){
@@ -31,7 +31,7 @@ int main()
 {
 	int a[5] = { 1, 3, 3, 4, 3 };
 	int n = 5;
-	Majority_Element_Sol_1(a, n);
+	MajorityElementSol1(a, n);
 	system("pause");
 	return 0;
 }
