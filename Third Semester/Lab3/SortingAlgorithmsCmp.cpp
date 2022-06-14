@@ -21,11 +21,42 @@ int insertionSortWithComparision(int a[], int n){return -1;}
 
 
 //------------------------BUBBLE SORT------------------------
-int bubbleSortWithComparision(int a[], int n){return -1;}
+int bubbleSortWithComparision(int a[], int n)
+{
+	int cmp = 0;
+	int count;
+	for (int i = 0; i < n - 1; i++, cmp++) {
+		count = 0;
+		for (int j = n - 1; j >= i; j--, cmp++) {
+			if (a[j] < a[j - 1] && cmp++) {
+				swap(a[j], a[j - 1]);
+				count++;
+			}
+		}
+		if (count == 0 && cmp++)
+			return;
+	}
+}
 
 
 //------------------------SHAKER SORT------------------------
-int shakerSortWithComparision(int a[], int n){return -1;}
+int shakerSortWithComparision(int a[], int n)
+{
+	int cmp = 0;
+	int L = 0, R = n - 1;
+	for (int i = L; i <= R; i++, cmp++) {
+		for (int j = R; j >= i; j--, cmp++) {
+			swap(a[j], a[j - 1]);
+		}
+		L++;
+		for (int j = L; j <= R; j++, cmp++) {
+			if (a[j] > a[j + 1] && cmp++)
+				swap(a[j], a[j + 1]);
+		}
+		R--;
+	}
+}
+}
 
 
 //------------------------SHELL SORT------------------------

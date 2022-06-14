@@ -17,10 +17,37 @@ void selectionSort(int a[], int n)
 void insertionSort(int a[], int n){}
 
 //------------------------BUBBLE SORT------------------------
-void bubbleSort(int a[], int n){}
+void bubbleSort(int a[], int n) 
+{
+	int count;
+	for (int i = 0; i < n - 1; i++) {
+		count = 0;
+		for (int j = n - 1; j >= i; j--) {
+			if (a[j] < a[j - 1]) {
+				swap(a[j], a[j - 1]);
+				count++;
+			}
+		}
+		if (count == 0)
+			return;
+	}
+}
 
 //------------------------SHAKER SORT------------------------
-void shakerSort(int a[], int n){}
+void shakerSort(int a[], int n) {
+	int L = 0, R = n - 1;
+	for (int i = L; i <= R; i++) {
+		for (int j = R; j >= i; j--) {
+			swap(a[j], a[j - 1]);
+		}
+		L++;
+		for (int j = L; j <= R; j++) {
+			if (a[j] > a[j + 1])
+				swap(a[j], a[j + 1]);
+		}
+		R--;
+	}
+}
 
 //------------------------SHELL SORT------------------------
 void shellSort(int a[], int n)
