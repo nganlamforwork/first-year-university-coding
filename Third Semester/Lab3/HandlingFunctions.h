@@ -4,6 +4,7 @@
 #include <fstream>
 #include <string>
 #include <string.h>
+#include <vector>
 
 #include "SortingAlgorithms.h"
 #include "SortingAlgorithmsCmp.h"
@@ -19,11 +20,11 @@ int findAlgorithm(char* argv);
 int findOutputParam(char* argv);
 int findInputOrder(char* argv);
 
-void readFile(string inputFile, int a[], int &n);
+void readFile(string inputFile, int*& a, int &n);
 void writeFile(string outputFile, int a[], int n);
 
 double runningTime(int a[], int n, string algorithm);
-int comparisions(int a[], int n, string algorithm);
+long long comparisions(int a[], int n, string algorithm);
 
 void algorithmMode(int argc, char *argv[]);
 void comparisionMode(int argc, char *argv[]);

@@ -1,5 +1,7 @@
 #include <iostream>
 
+#define MAXN 100000
+
 using namespace std;
 
 void selectionSort(int a[], int n);

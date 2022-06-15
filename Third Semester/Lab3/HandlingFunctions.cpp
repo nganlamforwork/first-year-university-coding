@@ -118,9 +118,9 @@ double runningTime(int a[], int n, string algorithm)
 	return answer;
 }
 
-int comparisions(int a[], int n, string algorithm)
+long long comparisions(int a[], int n, string algorithm)
 {
-	int answer = 0;
+	long long answer = 0;
 		if (algorithm == "insertion-sort")answer = insertionSortWithComparision(a, n);
 	else
 		if (algorithm == "bubble-sort")   answer = bubbleSortWithComparision(a, n);
@@ -144,10 +144,11 @@ int comparisions(int a[], int n, string algorithm)
 	return answer;
 }
 
-void readFile(string inputFile, int a[], int &n)
+void readFile(string inputFile, int*& a, int &n)
 {
 	ifstream in(inputFile);
 	in >> n;
+	a = new int[n];
 	for (int i = 0; i<n; i++)
 		in >> a[i];
 	in.close();
@@ -164,9 +165,13 @@ void writeFile(string outputFile, int a[], int n)
 
 void executeAlgorithm(int a[], int n, string algorithm, int outputParam)
 {
+	int* b = new int[n];
+	for (int i = 0; i < n; i++)
+		b[i] = a[i];
+
 	cout << "Running time (if required): ";
 	if (outputParam == 1 || outputParam == 3)
-		cout << runningTime(a, n, algorithm);
+		cout << runningTime(b, n, algorithm) << " microseconds ";
 	cout << '\n';
 
 	cout << "Comparisions (if required): ";
@@ -177,22 +182,34 @@ void executeAlgorithm(int a[], int n, string algorithm, int outputParam)
 
 void executeCompare(int a[], int n, string algorithm1, string algorithm2)
 {
+	int* b = new int[n];
+	for (int i = 0; i < n; i++)
+		b[i] = a[i];
 	cout << "Running time: ";
-	cout << runningTime(a, n, algorithm1);
+	cout << runningTime(b, n, algorithm1) << " microseconds ";
 	cout << " | ";
-	cout << runningTime(a, n, algorithm2);
+
+	for (int i = 0; i < n; i++)
+		b[i] = a[i];
+	cout << runningTime(b, n, algorithm2) << " microseconds ";
 	cout << '\n';
 
+	for (int i = 0; i < n; i++)
+		b[i] = a[i];
 	cout << "Comparisions: ";
-	cout << comparisions(a, n, algorithm1);
+	cout << comparisions(b, n, algorithm1);
 	cout << " | ";
-	cout << comparisions(a, n, algorithm2);
+
+	for (int i = 0; i < n; i++)
+		b[i] = a[i];
+	cout << comparisions(b, n, algorithm2);
 	cout << '\n';
 }
 
 void algorithmMode(int argc, char *argv[])
 {
-	int n, a[MAXN];
+	int n;
+	int* a;
 
 	if (argc != 5 && argc != 6) return;
 
@@ -211,9 +228,10 @@ void algorithmMode(int argc, char *argv[])
 			cout << "Input size: " << inputSize << '\n';
 
 			n = inputSize;
+			a = new int[n];
 			string inputOrder[] = { "-rand", "-nsorted", "-sorted", "-rev" };
 			string outputFile[] = { "input_1.txt", "input_2.txt", "input_3.txt", "input_4.txt" };
-			for (int i = 0; i<4; i++){
+			for (int i = 0; i < 4; i++){
 				GenerateData(a, n, findInputOrder(inputOrder[i]) - 1);
 				writeFile(outputFile[i], a, n);
 
@@ -221,6 +239,7 @@ void algorithmMode(int argc, char *argv[])
 				cout << "-----------------------\n";
 				executeAlgorithm(a, n, algorithm, outputParam);
 			}
+			return;
 		}
 		//--------------END COMMAND 3--------------
 
@@ -232,6 +251,7 @@ void algorithmMode(int argc, char *argv[])
 		executeAlgorithm(a, n, algorithm, outputParam);
 
 		writeFile("output.txt", a, n);
+		return;
 	}
 
 	//--------------COMMAND 2--------------
@@ -245,6 +265,7 @@ void algorithmMode(int argc, char *argv[])
 		cout << "-----------------------\n";
 
 		n = inputSize;
+		a = new int[n];
 		GenerateData(a, n, findInputOrder(inputOrder) - 1);
 		writeFile("input.txt", a, n);
 
@@ -258,7 +279,8 @@ void algorithmMode(int argc, char *argv[])
 
 void comparisionMode(int argc, char *argv[])
 {
-	int n, a[MAXN];
+	int n;
+	int* a;
 
 	if (argc != 5 && argc != 6) return;
 
@@ -276,6 +298,7 @@ void comparisionMode(int argc, char *argv[])
 		cout << "-----------------------\n";
 
 		executeCompare(a, n, algorithm1, algorithm2);
+		return;
 	}
 
 	int inputSize = atoi(argv[4]);
@@ -286,6 +309,7 @@ void comparisionMode(int argc, char *argv[])
 	cout << "-----------------------\n";
 
 	n = inputSize;
+	a = new int[n];
 	GenerateData(a, n, findInputOrder(inputOrder) - 1);
 	writeFile("input.txt", a, n);
 

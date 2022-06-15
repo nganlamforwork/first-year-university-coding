@@ -1,9 +1,9 @@
 #include "SortingAlgorithms.h"
 
 //------------------------SELECTION SORT------------------------
-int selectionSortWithComparision(int a[], int n)
+long long selectionSortWithComparision(int a[], int n)
 {
-    int cmp = 0;
+    long long cmp = 0;
     for (int i = 0; ++cmp && i < n-1; i++){
         int minIndex = i;
         for (int j = i + 1; ++cmp && j < n; j++){
@@ -17,13 +17,29 @@ int selectionSortWithComparision(int a[], int n)
 
 
 //------------------------INSERTION SORT------------------------
-int insertionSortWithComparision(int a[], int n){return -1;}
+long long insertionSortWithComparision(int a[], int n)
+{
+    long long cmp = 0;
+    for (int i = 0; i < n; i++, ++cmp) {
+        int cur = a[i];
+        int j = i - 1;
+
+        while (j >= 0 && a[j] > cur) {
+            a[j + 1] = a[j];
+            j--;
+            cmp += 2;
+        };
+
+        a[j + 1] = cur;
+    };
+    return cmp;
+}
 
 
 //------------------------BUBBLE SORT------------------------
-int bubbleSortWithComparision(int a[], int n)
+long long bubbleSortWithComparision(int a[], int n)
 {
-	int cmp = 0;
+	long long cmp = 0;
 	int count;
 	for (int i = 0; i < n - 1; i++, cmp++) {
 		count = 0;
@@ -34,15 +50,16 @@ int bubbleSortWithComparision(int a[], int n)
 			}
 		}
 		if (count == 0 && cmp++)
-			return;
+			return cmp;
 	}
+    return cmp;
 }
 
 
 //------------------------SHAKER SORT------------------------
-int shakerSortWithComparision(int a[], int n)
+long long shakerSortWithComparision(int a[], int n)
 {
-	int cmp = 0;
+	long long cmp = 0;
 	int L = 0, R = n - 1;
 	for (int i = L; i <= R; i++, cmp++) {
 		for (int j = R; j >= i; j--, cmp++) {
@@ -55,31 +72,32 @@ int shakerSortWithComparision(int a[], int n)
 		}
 		R--;
 	}
+    return cmp;
 }
-}
+
 
 
 //------------------------SHELL SORT------------------------
-int shellSortWithComparision(int a[], int n)
+long long shellSortWithComparision(int a[], int n)
 {
-    int cntComparision = 0;
-    for (int gap = n/2; gap > 0; gap /= 2, cntComparision++){
-        for (int i = gap; i < n; i += 1, cntComparision++){
+    long long cmp = 0;
+    for (int gap = n/2; gap > 0; gap /= 2, cmp++){
+        for (int i = gap; i < n; i += 1, cmp++){
             int temp = a[i];
             int j;
-            for (j = i; j >= gap && a[j - gap] > temp; j -= gap, cntComparision+=2 )
+            for (j = i; j >= gap && a[j - gap] > temp; j -= gap, cmp+=2 )
                 a[j] = a[j - gap];
             a[j] = temp;
         }
     }
-    return cntComparision;
+    return cmp;
 }
 
 
 //------------------------HEAP SORT------------------------
-void heapifyWithComparision(int a[], int n, int i, int &cntComparision)
+void heapifyWithComparision(int a[], int n, int i, long long &cmp)
 {
-    cntComparision+=5;
+    cmp += 5;
     int largest = i;
     int l = 2 * i + 1;
     int r = 2 * i + 2;
@@ -89,26 +107,25 @@ void heapifyWithComparision(int a[], int n, int i, int &cntComparision)
         largest = r;
     if (largest != i) {
         swap(a[i], a[largest]);
-        heapifyWithComparision(a, n, largest,cntComparision);
+        heapifyWithComparision(a, n, largest, cmp);
     }
 }
-
-int heapSortWithComparision(int a[], int n)
+long long heapSortWithComparision(int a[], int n)
 {
-    int cntComparision = 0;
-    for (int i = n / 2 - 1; i >= 0; i--, cntComparision++)
-        heapifyWithComparision(a, n, i, cntComparision);
-    for (int i = n - 1; i > 0; i--, cntComparision++) {
+    long long cmp = 0;
+    for (int i = n / 2 - 1; i >= 0; i--, cmp++)
+        heapifyWithComparision(a, n, i, cmp);
+    for (int i = n - 1; i > 0; i--, cmp++) {
         swap(a[0], a[i]);
-        heapifyWithComparision(a, i, 0, cntComparision);
+        heapifyWithComparision(a, i, 0, cmp);
     }
-    return cntComparision;
+    return cmp;
 }
 
 
 //------------------------MERGE SORT------------------------
-int mergeWithComparision(int a[], int left, int mid, int right){
-    int cmp = 0;
+long long mergeWithComparision(int a[], int left, int mid, int right){
+    long long cmp = 0;
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
@@ -140,9 +157,9 @@ int mergeWithComparision(int a[], int left, int mid, int right){
 
     return cmp;
 }
-int mergeSortWithComparision(int a[], int left, int right)
+long long mergeSortWithComparision(int a[], int left, int right)
 {
-    int cmp = 0;
+    long long cmp = 0;
     if (++cmp && left >= right)
         return cmp;
     int mid = left + (right - left) / 2;
@@ -151,26 +168,126 @@ int mergeSortWithComparision(int a[], int left, int right)
     int cmpInMerge = mergeWithComparision(a,left, mid, right);
     return cmp + cmpInLeft + cmpInRight + cmpInMerge;
 }
-int mergeSortWithComparision(int a[], int n)
+long long mergeSortWithComparision(int a[], int n)
 {
     return mergeSortWithComparision(a,0,n-1);
 }
 
 
 //------------------------QUICK SORT------------------------
-int quickSortWithComparision(int a[], int n){return -1;}
+int partitionWithComparision(int a[], int low, int high, long long& cmp)
+{
+    int mid = low + (high - low) / 2;
+    if (a[low] > a[mid] && a[mid] > a[high])
+        swap(a[low], a[mid]), cmp += 2;
+    else if (a[low] > a[high] && a[high] > a[mid])
+        swap(a[low], a[high]), cmp += 2;
+    else if (a[mid] > a[high] && a[high] < a[low])
+        swap(a[high], a[low]), cmp += 2;
+    else if (a[high] > a[mid] && a[mid] > a[low])
+        swap(a[mid], a[low]), cmp += 2;
+
+    int first = low, last = high;
+    int pivot = a[first];
+    int last1 = first;
+    int first_unknown = first + 1;
+    while (first_unknown <= last && ++cmp) {
+        if (a[first_unknown] < pivot && ++cmp) {
+            swap(a[first_unknown], a[last1 + 1]);
+            last1++;
+            first_unknown++;
+        }
+        else first_unknown++;
+    }
+    swap(a[first], a[last1]);
+    return last1;
+};
+void quickSortWithComparision(int a[], int low, int high, long long& cmp)
+{
+    if (low < high && ++cmp) {
+        int pivot = partitionWithComparision(a, low, high, cmp);
+        quickSortWithComparision(a, low, pivot - 1, cmp);
+        quickSortWithComparision(a, pivot + 1, high, cmp);
+    }
+}
+long long quickSortWithComparision(int a[], int n)
+{
+    long long cmp = 0;
+    quickSortWithComparision(a, 0, n - 1, cmp);
+    return cmp;
+}
 
 
 //------------------------COUNTING SORT------------------------
-int countingSortWithComparision(int a[], int n){return -1;}
+long long countingSortWithComparision(int a[], int n)
+{
+    long long cmp = 0;
+    int Max = a[0], Min = a[0];
+    for (int i = 0; i < n; i++, ++cmp) {
+        if (Max < a[i] && ++cmp) Max = a[i];
+        if (Min > a[i] && ++cmp) Min = a[i];
+    };
+
+    int range = Max - Min + 1;
+    int* cntArr = new int[range];
+
+    fill_n(cntArr, range, 0);
+
+    for (int i = 0; i < n; i++, ++cmp)
+        cntArr[a[i] - Min]++;
+
+    for (int i = 1; i < range; i++, ++cmp)
+        cntArr[i] += cntArr[i - 1];
+
+    int* b = new int[n];
+    for (int i = 0; i < n; i++, ++cmp) {
+        b[cntArr[a[i] - Min] - 1] = a[i];
+        cntArr[a[i] - Min]--;
+    };
+
+    for (int i = 0; i < n; i++, ++cmp)
+        a[i] = b[i];
+    
+    return cmp;
+}
+
 
 //------------------------RADIX SORT------------------------
-int radixSortWithComparision(int a[], int n){return -1;}
+int getMaxWithComparision(int a[], int n, long long& cmp) {
+    int max = a[0];
+    for (int i = 0; i < n; i++, ++cmp)
+        if (a[i] > max && ++cmp)
+            max = a[i];
+    return max;
+}
+void countSortWithComparision(int a[], int n, int exp, long long& cmp) {
+
+    int* output = new int[n];
+    int i, count[10] = { 0 };
+
+    for (i = 0; i < n; i++, ++cmp)
+        count[(a[i] / exp) % 10]++;
+    for (i = 1; i < 10; i++, ++cmp)
+        count[i] += count[i - 1];
+    for (i = n - 1; i >= 0; i--, ++cmp) {
+        output[count[(a[i] / exp) % 10] - 1] = a[i];
+        count[(a[i] / exp) % 10]--;
+    }
+    for (i = 0; i < n; i++, ++cmp)
+        a[i] = output[i];
+}
+long long radixSortWithComparision(int a[], int n) {
+    long long cmp = 0;
+    int MAX = getMaxWithComparision(a, n, cmp);
+    for (int exp = 1; MAX / exp > 0; exp *= 10, ++cmp)
+        countSortWithComparision(a, n, exp, cmp);
+    return cmp;
+}
 
 //------------------------FLASH SORT------------------------
-int flashSortWithComparision(int a[], int n)
+long long flashSortWithComparision(int a[], int n)
 {
-    int cmp = 0;
+    long long cmp = 0;
     int numberOfGroups = n * 0.45;
     int *groups = new int [numberOfGroups];
     for (int i = 0; ++cmp && i < numberOfGroups; i++)

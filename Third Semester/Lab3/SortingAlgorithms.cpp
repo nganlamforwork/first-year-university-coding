@@ -14,7 +14,20 @@ void selectionSort(int a[], int n)
 }
 
 //------------------------INSERTION SORT------------------------
-void insertionSort(int a[], int n){}
+void insertionSort(int a[], int n)
+{
+    for (int i = 0; i < n; i++){
+        int cur = a[i];
+        int j = i - 1;
+
+        while (j >= 0 && a[j] > cur){
+            a[j + 1] = a[j];
+            j--;
+        };
+
+        a[j + 1] = cur;
+    };
+}
 
 //------------------------BUBBLE SORT------------------------
 void bubbleSort(int a[], int n) 
@@ -136,14 +149,105 @@ void mergeSort(int a[], int n)
 
 
 //------------------------QUICK SORT------------------------
-void quickSort(int a[], int n){}
+int partition(int a[], int low, int high)
+{
+    int mid = low + (high - low) / 2;
+    if (a[low] > a[mid] && a[mid] > a[high])
+        swap(a[low], a[mid]);
+    else if (a[low] > a[high] && a[high] > a[mid])
+        swap(a[low], a[high]);
+    else if (a[mid] > a[high] && a[high] < a[low])
+        swap(a[high], a[low]);
+    else if (a[high] > a[mid] && a[mid] > a[low])
+        swap(a[mid], a[low]);
 
+    int first = low, last = high;
+    int pivot = a[first];
+    int last1 = first;
+    int first_unknown = first + 1;
+    while (first_unknown <= last){
+        if (a[first_unknown] < pivot){
+            swap(a[first_unknown], a[last1 + 1]);
+            last1++;
+            first_unknown++;
+        }
+        else first_unknown++;
+    }
+    swap(a[first], a[last1]);
+    return last1;
+};
+void quickSort(int a[], int low, int high)
+{
+    if (low < high){
+        int pivot = partition(a, low, high);
+        quickSort(a, low, pivot - 1);
+        quickSort(a, pivot + 1, high);
+    }
+}
+void quickSort(int a[], int n)
+{
+    quickSort(a, 0, n - 1);
+}
 
 //------------------------COUNTING SORT------------------------
-void countingSort(int a[], int n){}
+void countingSort(int a[], int n)
+{
+    int Max = a[0], Min = a[0];
+    for (int i = 0; i < n; i++){
+        if (Max < a[i]) Max = a[i];
+        if (Min > a[i]) Min = a[i];
+    };
+
+    int range = Max - Min + 1;
+    int* cntArr = new int [range];
+
+    fill_n(cntArr, range, 0);
+
+    for (int i = 0; i < n; i++)
+        cntArr[a[i] - Min]++;
+
+    for (int i = 1; i < range; i++)
+        cntArr[i] += cntArr[i - 1];
+
+    int* b = new int [n];
+    for (int i = 0; i < n; i++){
+        b[cntArr[a[i] - Min] - 1] = a[i];
+        cntArr[a[i] - Min]--;
+    };
+
+    for (int i = 0; i < n; i++)
+        a[i] = b[i];
+}
 
 //------------------------RADIX SORT------------------------
-void radixSort(int a[], int n){}
+int getMax(int a[], int n) {
+    int max = a[0];
+    for (int i = 0; i < n; i++)
+        if (a[i] > max)
+            max = a[i];
+    return max;
+}
+void countSort(int a[], int n, int exp) {
+
+    int* output = new int[n];
+    int i, count[10] = { 0 };
+
+    for (i = 0; i < n; i++)
+        count[(a[i] / exp) % 10]++;
+    for (i = 1; i < 10; i++)
+        count[i] += count[i - 1];
+    for (i = n - 1; i >= 0; i--) {
+        output[count[(a[i] / exp) % 10] - 1] = a[i];
+        count[(a[i] / exp) % 10]--;
+    }
+    for (i = 0; i < n; i++)
+        a[i] = output[i];
+}
+void radixSort(int a[], int n) {
+    int MAX = getMax(a, n);
+    for (int exp = 1; MAX / exp > 0; exp *= 10)
+        countSort(a, n, exp);
+}
 
 //------------------------FLASH SORT------------------------
 void flashSort(int a[], int n){
