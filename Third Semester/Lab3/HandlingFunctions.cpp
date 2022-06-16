@@ -1,20 +1,29 @@
 #include "HandlingFunctions.h"
 #include "DataGenerator.h"
 
-int findAlgorithm(char* argv)
+string outputAlgorithm(string argv)
 {
-	if (string(argv) == "selection-sort") return 1;
-	if (string(argv) == "insertion-sort") return 2;
-	if (string(argv) == "bubble-sort")    return 3;
-	if (string(argv) == "shaker-sort")    return 4;
-	if (string(argv) == "shell-sort")     return 5;
-	if (string(argv) == "heap-sort")      return 6;
-	if (string(argv) == "merge-sort")     return 7;
-	if (string(argv) == "quick-sort")     return 8;
-	if (string(argv) == "counting-sort")  return 9;
-	if (string(argv) == "radix-sort")     return 10;
-	if (string(argv) == "flash-sort")     return 11;
-	return 0;
+	if (string(argv) == "selection-sort") return "Selection Sort";
+	if (string(argv) == "insertion-sort") return "Insertion Sort";
+	if (string(argv) == "bubble-sort")    return "Bubble Sort";
+	if (string(argv) == "shaker-sort")    return "Shaker Sort";
+	if (string(argv) == "shell-sort")     return "Shell Sort";
+	if (string(argv) == "heap-sort")      return "Heap Sort";
+	if (string(argv) == "merge-sort")     return "Merge Sort";
+	if (string(argv) == "quick-sort")     return "Quick Sort";
+	if (string(argv) == "counting-sort")  return "Counting Sort";
+	if (string(argv) == "radix-sort")     return "Radix Sort";
+	if (string(argv) == "flash-sort")     return "Flash Sort";
+	return "";
+}
+
+string outputInputOrder(string argv)
+{
+	if (string(argv) == "-rand") return "Randomized";
+	if (string(argv) == "-sorted") return "Sorted";
+	if (string(argv) == "-rev") return "Reversed";
+	if (string(argv) == "-nsorted") return "Nearly Sorted";
+	return "";
 }
 
 int findOutputParam(char* argv)
@@ -42,77 +51,77 @@ double runningTime(int a[], int n, string algorithm)
 		selectionSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 	if (algorithm == "insertion-sort")  {
 		auto start = high_resolution_clock::now();
 		insertionSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 	if (algorithm == "bubble-sort") {
 		auto start = high_resolution_clock::now();
 		bubbleSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 	if (algorithm == "shaker-sort") {
 		auto start = high_resolution_clock::now();
 		shakerSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 	if (algorithm == "shell-sort") {
 		auto start = high_resolution_clock::now();
 		shellSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 	if (algorithm == "heap-sort") {
 		auto start = high_resolution_clock::now();
 		heapSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 	if (algorithm == "merge-sort") {
 		auto start = high_resolution_clock::now();
 		mergeSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 	if (algorithm == "quick-sort") {
 		auto start = high_resolution_clock::now();
 		quickSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 	if (algorithm == "counting-sort") {
 		auto start = high_resolution_clock::now();
 		countingSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 	if (algorithm == "radix-sort") {
 		auto start = high_resolution_clock::now();
 		radixSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 	if (algorithm == "flash-sort") {
 		auto start = high_resolution_clock::now();
 		flashSort(a, n);
 		auto stop = high_resolution_clock::now();
 		auto duration = duration_cast<nanoseconds>(stop - start);
-		answer = duration.count() / 1e3;
+		answer = duration.count() / 1e6;
 	}
 
 	return answer;
@@ -171,7 +180,7 @@ void executeAlgorithm(int a[], int n, string algorithm, int outputParam)
 
 	cout << "Running time (if required): ";
 	if (outputParam == 1 || outputParam == 3)
-		cout << runningTime(b, n, algorithm) << " microseconds ";
+		cout << runningTime(b, n, algorithm) << " ms ";
 	cout << '\n';
 
 	cout << "Comparisions (if required): ";
@@ -186,12 +195,12 @@ void executeCompare(int a[], int n, string algorithm1, string algorithm2)
 	for (int i = 0; i < n; i++)
 		b[i] = a[i];
 	cout << "Running time: ";
-	cout << runningTime(b, n, algorithm1) << " microseconds ";
+	cout << runningTime(b, n, algorithm1) << " ms ";
 	cout << " | ";
 
 	for (int i = 0; i < n; i++)
 		b[i] = a[i];
-	cout << runningTime(b, n, algorithm2) << " microseconds ";
+	cout << runningTime(b, n, algorithm2) << " ms ";
 	cout << '\n';
 
 	for (int i = 0; i < n; i++)
@@ -216,7 +225,7 @@ void algorithmMode(int argc, char *argv[])
 	string algorithm = argv[2];
 	cout << "ALGORITHM MODE\n";
 	cout << "Algorithm: ";
-	cout << algorithm << '\n';
+	cout << outputAlgorithm(algorithm) << '\n';
 
 	if (argc == 5){
 		string givenInput = argv[3];
@@ -235,7 +244,7 @@ void algorithmMode(int argc, char *argv[])
 				GenerateData(a, n, findInputOrder(inputOrder[i]) - 1);
 				writeFile(outputFile[i], a, n);
 
-				cout << "\nInput order: " << inputOrder[i] << '\n';
+				cout << "\nInput order: " << outputInputOrder(inputOrder[i]) << '\n';
 				cout << "-----------------------\n";
 				executeAlgorithm(a, n, algorithm, outputParam);
 			}
@@ -261,7 +270,7 @@ void algorithmMode(int argc, char *argv[])
 		int outputParam = findOutputParam(argv[5]);
 
 		cout << "Input size: " << inputSize << '\n';
-		cout << "Input order: " << inputOrder << '\n';
+		cout << "Input order: " << outputInputOrder(inputOrder) << '\n';
 		cout << "-----------------------\n";
 
 		n = inputSize;
@@ -287,7 +296,7 @@ void comparisionMode(int argc, char *argv[])
 	string algorithm1 = argv[2];
 	string algorithm2 = argv[3];
 	cout << "COMPARE MODE\n";
-	cout << "Algorithm: " << algorithm1 << " | " << algorithm2 << '\n';
+	cout << "Algorithm: " << outputAlgorithm(algorithm1) << " | " << outputAlgorithm(algorithm2) << '\n';
 
 	if (argc == 5){
 		string givenInput = argv[4];
@@ -305,7 +314,7 @@ void comparisionMode(int argc, char *argv[])
 	string inputOrder = argv[5];
 
 	cout << "Input size: " << inputSize << '\n';
-	cout << "Input order: " << inputOrder << '\n';
+	cout << "Input order: " << outputInputOrder(inputOrder) << '\n';
 	cout << "-----------------------\n";
 
 	n = inputSize;
@@ -316,14 +325,13 @@ void comparisionMode(int argc, char *argv[])
 	executeCompare(a, n, algorithm1, algorithm2);
 }
 
-bool handleCmdArguments(int argc, char *argv[])
+void handleCmdArguments(int argc, char *argv[])
 {
 	if (argc > 1){
 		if (string(argv[1]) == "-a")
 			algorithmMode(argc, argv);
 		else if (string(argv[1]) == "-c")
 			comparisionMode(argc, argv);
-		else return 0;
+		else return;
 	}
-	return 0;
 }

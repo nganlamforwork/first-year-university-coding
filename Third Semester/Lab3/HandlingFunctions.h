@@ -16,7 +16,8 @@ using namespace std::chrono;
 
 void printArray(int a[], int n);
 
-int findAlgorithm(char* argv);
+string outputAlgorithm(string argv);
+string outputInputOrder(string argv);
 int findOutputParam(char* argv);
 int findInputOrder(char* argv);
 
@@ -29,4 +30,4 @@ long long comparisions(int a[], int n, string algorithm);
 void algorithmMode(int argc, char *argv[]);
 void comparisionMode(int argc, char *argv[]);
 
-bool handleCmdArguments(int argc, char *argv[]);
+void handleCmdArguments(int argc, char *argv[]);
