@@ -288,7 +288,7 @@ long long radixSortWithComparision(int a[], int n) {
 long long flashSortWithComparision(int a[], int n)
 {
     long long cmp = 0;
-    int numberOfGroups = n * 0.45;
+    int numberOfGroups = n * 0.005;
     int *groups = new int [numberOfGroups];
     for (int i = 0; ++cmp && i < numberOfGroups; i++)
         groups[i] = 0;

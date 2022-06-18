@@ -251,7 +251,7 @@ void radixSort(int a[], int n) {
 
 //------------------------FLASH SORT------------------------
 void flashSort(int a[], int n){
-    int numberOfGroups = n * 0.45;
+    int numberOfGroups = n * 0.005;
     int *groups = new int [numberOfGroups];
     for (int i = 0; i < numberOfGroups; i++)
         groups[i] = 0;

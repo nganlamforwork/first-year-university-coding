@@ -3,7 +3,8 @@
 
 int main(int argc, char *argv[])
 {
-    handleCmdArguments(argc,argv);
-    cout << '\n';
+    bool valid = handleCmdArguments(argc,argv);
+    if (valid) cout << '\n';
+    else cout << "Invalid command!\n";
     return 0;
 }

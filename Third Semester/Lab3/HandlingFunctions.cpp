@@ -26,6 +26,22 @@ string outputInputOrder(string argv)
 	return "";
 }
 
+int findOutputAlgorithm(string argv)
+{
+	if (string(argv) == "selection-sort") return 1;
+	if (string(argv) == "insertion-sort") return 2;
+	if (string(argv) == "bubble-sort")    return 3;
+	if (string(argv) == "shaker-sort")    return 4;
+	if (string(argv) == "shell-sort")     return 5;
+	if (string(argv) == "heap-sort")      return 6;
+	if (string(argv) == "merge-sort")     return 7;
+	if (string(argv) == "quick-sort")     return 8;
+	if (string(argv) == "counting-sort")  return 9;
+	if (string(argv) == "radix-sort")     return 10;
+	if (string(argv) == "flash-sort")     return 11;
+	return 0;
+}
+
 int findOutputParam(char* argv)
 {
 	if (string(argv) == "-time") return 1;
@@ -217,14 +233,15 @@ void executeCompare(int a[], int n, string algorithm1, string algorithm2)
 	cout << '\n';
 }
 
-void algorithmMode(int argc, char *argv[])
+bool algorithmMode(int argc, char *argv[])
 {
 	int n;
 	int* a;
 
-	if (argc != 5 && argc != 6) return;
+	if (argc != 5 && argc != 6) return 0;
 
 	string algorithm = argv[2];
+	if (!findOutputAlgorithm(algorithm)) return 0;
 	cout << "ALGORITHM MODE\n";
 	cout << "Algorithm: ";
 	cout << outputAlgorithm(algorithm) << '\n';
@@ -232,11 +249,13 @@ void algorithmMode(int argc, char *argv[])
 	if (argc == 5){
 		string givenInput = argv[3];
 		int outputParam = findOutputParam(argv[4]);
+		if (!findOutputParam) return 0;
 
 		//--------------COMMAND 3--------------
 		if (givenInput[0] >= '0' && givenInput[0] <= '9'){
 			int inputSize = atoi(argv[3]);
 			cout << "Input size: " << inputSize << '\n';
+			if (inputSize <= 0) return 0;
 
 			n = inputSize;
 			a = new int[n];
@@ -250,26 +269,29 @@ void algorithmMode(int argc, char *argv[])
 				cout << "-----------------------\n";
 				executeAlgorithm(a, n, algorithm, outputParam);
 			}
-			return;
+			return 1;
 		}
 		//--------------END COMMAND 3--------------
 
 		cout << "Input file: " << givenInput << '\n';
 		readFile(givenInput, a, n);
-		cout << "Input size: \n";
+		cout << "Input size: " << n << '\n';
 		cout << "-----------------------\n";
 
 		executeAlgorithm(a, n, algorithm, outputParam);
 
 		writeFile("output.txt", a, n);
-		return;
+		return 1;
 	}
 
 	//--------------COMMAND 2--------------
 	if (argc == 6){
 		int inputSize = atoi(argv[3]);
+		if (inputSize <= 0) return 0;
 		string inputOrder = argv[4];
+		if (!findInputOrder(inputOrder)) return 0;
 		int outputParam = findOutputParam(argv[5]);
+		if (!findOutputParam) return 0;
 
 		cout << "Input size: " << inputSize << '\n';
 		cout << "Input order: " << outputInputOrder(inputOrder) << '\n';
@@ -283,20 +305,22 @@ void algorithmMode(int argc, char *argv[])
 		executeAlgorithm(a, n, algorithm, outputParam);
 
 		writeFile("output.txt", a, n);
+		return 1;
 	}
 	//--------------END COMMAND 2--------------
-
+	return 0;
 }
 
-void comparisionMode(int argc, char *argv[])
+bool comparisionMode(int argc, char *argv[])
 {
 	int n;
 	int* a;
 
-	if (argc != 5 && argc != 6) return;
+	if (argc != 5 && argc != 6) return 0;
 
 	string algorithm1 = argv[2];
 	string algorithm2 = argv[3];
+	if (!findOutputAlgorithm(algorithm1) || !findOutputAlgorithm(algorithm2)) return 0;
 	cout << "COMPARE MODE\n";
 	cout << "Algorithm: " << outputAlgorithm(algorithm1) << " | " << outputAlgorithm(algorithm2) << '\n';
 
@@ -309,11 +333,13 @@ void comparisionMode(int argc, char *argv[])
 		cout << "-----------------------\n";
 
 		executeCompare(a, n, algorithm1, algorithm2);
-		return;
+		return 1;
 	}
 
 	int inputSize = atoi(argv[4]);
+	if (inputSize <= 0) return 0;
 	string inputOrder = argv[5];
+	if (!findInputOrder(inputOrder)) return 0;
 
 	cout << "Input size: " << inputSize << '\n';
 	cout << "Input order: " << outputInputOrder(inputOrder) << '\n';
@@ -325,15 +351,18 @@ void comparisionMode(int argc, char *argv[])
 	writeFile("input.txt", a, n);
 
 	executeCompare(a, n, algorithm1, algorithm2);
+
+	return 1;
 }
 
-void handleCmdArguments(int argc, char *argv[])
+bool handleCmdArguments(int argc, char *argv[])
 {
 	if (argc > 1){
 		if (string(argv[1]) == "-a")
-			algorithmMode(argc, argv);
+			return algorithmMode(argc, argv);
 		else if (string(argv[1]) == "-c")
-			comparisionMode(argc, argv);
-		else return;
+			return comparisionMode(argc, argv);
+		else return 0;
 	}
+	return 0;
 }

@@ -28,7 +28,7 @@ void writeFile(string outputFile, int a[], int n);
 double runningTime(int a[], int n, string algorithm);
 long long comparisions(int a[], int n, string algorithm);
 
-void algorithmMode(int argc, char *argv[]);
-void comparisionMode(int argc, char *argv[]);
+bool algorithmMode(int argc, char *argv[]);
+bool comparisionMode(int argc, char *argv[]);
 
-void handleCmdArguments(int argc, char *argv[]);
+bool handleCmdArguments(int argc, char *argv[]);
