@@ -182,7 +182,7 @@ void executeAlgorithm(int a[], int n, string algorithm, int outputParam)
 
 	cout << "Running time (if required): ";
 	if (outputParam == 1 || outputParam == 3)
-		cout << runningTime(b, n, algorithm) << " ms ";
+		cout << fixed << setprecision(5) << runningTime(b, n, algorithm) << " ms ";
 	cout << '\n';
 
 	cout << "Comparisions (if required): ";
@@ -197,12 +197,12 @@ void executeCompare(int a[], int n, string algorithm1, string algorithm2)
 	for (int i = 0; i < n; i++)
 		b[i] = a[i];
 	cout << "Running time: ";
-	cout << runningTime(b, n, algorithm1) << " ms ";
+	cout << fixed << setprecision(5) << runningTime(b, n, algorithm1) << " ms ";
 	cout << " | ";
 
 	for (int i = 0; i < n; i++)
 		b[i] = a[i];
-	cout << runningTime(b, n, algorithm2) << " ms ";
+	cout << fixed << setprecision(5) << runningTime(b, n, algorithm2) << " ms ";
 	cout << '\n';
 
 	for (int i = 0; i < n; i++)
