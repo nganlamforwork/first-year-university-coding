@@ -163,9 +163,9 @@ long long mergeSortWithComparision(int a[], int left, int right)
     if (++cmp && left >= right)
         return cmp;
     int mid = left + (right - left) / 2;
-    int cmpInLeft = mergeSortWithComparision(a,left, mid);
-    int cmpInRight = mergeSortWithComparision(a,mid+1, right);
-    int cmpInMerge = mergeWithComparision(a,left, mid, right);
+    long long cmpInLeft = mergeSortWithComparision(a,left, mid);
+    long long cmpInRight = mergeSortWithComparision(a,mid+1, right);
+    long long cmpInMerge = mergeWithComparision(a,left, mid, right);
     return cmp + cmpInLeft + cmpInRight + cmpInMerge;
 }
 long long mergeSortWithComparision(int a[], int n)

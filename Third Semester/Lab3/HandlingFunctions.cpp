@@ -130,6 +130,8 @@ double runningTime(int a[], int n, string algorithm)
 long long comparisions(int a[], int n, string algorithm)
 {
 	long long answer = 0;
+		if (algorithm == "selection-sort")answer = selectionSortWithComparision(a, n);
+	else
 		if (algorithm == "insertion-sort")answer = insertionSortWithComparision(a, n);
 	else
 		if (algorithm == "bubble-sort")   answer = bubbleSortWithComparision(a, n);
