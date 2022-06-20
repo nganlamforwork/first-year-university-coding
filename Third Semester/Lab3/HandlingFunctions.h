@@ -4,13 +4,10 @@
 #include <fstream>
 #include <string>
 #include <string.h>
-#include <vector>
 #include <iomanip>
 
 #include "SortingAlgorithms.h"
 #include "SortingAlgorithmsCmp.h"
-
-#define MAXN 100000
 
 using namespace std;
 using namespace std::chrono;
