@@ -204,11 +204,17 @@ bool isBST(Node* root)
 			return 0;
 	return 1;
 }
+bool isFullBST(Node* root)
+{
+	if (root == nullptr) return 1;
+	if (!((root->right == nullptr) ^ (root->left == nullptr)))
+		return isFullBST(root->right) && isFullBST(root->left);
+	return 0;
+}
 int main()
 {
-	int a[] = { 1,2,34,3,62,21 };
-	int n = 6;
+	int a[] = { 1,2,34,3,62};
+	int n = 5;
 	Node* root = createTree(a, n);
-	LRN(root);
-	//cout << isBST(root);
+	cout << isFullBST(root);
 }
