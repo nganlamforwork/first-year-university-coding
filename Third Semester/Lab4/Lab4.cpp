@@ -145,6 +145,12 @@ int countLess(Node* root, int x)
 	if (root->key >= x) return countLess(root->left, x);
 	return countLess(root->right, x);
 }
+int countGreater(Node* root, int x)
+{
+	if (root == nullptr) return 0;
+	if (root->key < x) return countLess(root->right, x);
+	return countLess(root->left, x);
+}
 Node* findMin(Node* root)
 {
 	if (root->left == nullptr)
@@ -178,7 +184,10 @@ void remove(Node* &root, int x)
 	root->key = tmp->key;
 	remove(root->right, tmp->key);
 }
+bool isBST(Node* root)
+{
 
+}
 int main()
 {
 
