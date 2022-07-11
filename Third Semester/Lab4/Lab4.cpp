@@ -97,9 +97,11 @@ Node* search(Node* root, int x)
 }
 Node* createTree(int a[], int n)
 {
-	Node* root = new Node;
-	for (int i = 0; i < n; i++) 
+	Node* root = nullptr;
+	for (int i = 0; i < n; i++) {
+		int tmp = a[i];
 		insert(root, a[i]);
+	}
 	return root;
 }
 void removeTree(Node* &root)
@@ -184,11 +186,29 @@ void remove(Node* &root, int x)
 	root->key = tmp->key;
 	remove(root->right, tmp->key);
 }
+void LNRWStorage(Node* root, int& n, int a[])
+{
+	if (root == nullptr)
+		return;
+	LNRWStorage(root->left, n, a);
+	a[++n] = root->key;
+	LNRWStorage(root->right, n, a);
+}
 bool isBST(Node* root)
 {
-
+	int n = 0;
+	int* a = new int[100];
+	LNRWStorage(root, n, a);
+	for (int i = 0; i < n - 1; i++)
+		if (a[i] > a[i + 1])
+			return 0;
+	return 1;
 }
 int main()
 {
-
+	int a[] = { 1,2,34,3,62,21 };
+	int n = 6;
+	Node* root = createTree(a, n);
+	LRN(root);
+	//cout << isBST(root);
 }
