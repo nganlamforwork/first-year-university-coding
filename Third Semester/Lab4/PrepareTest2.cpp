@@ -1,5 +1,4 @@
 #include <iostream>
-#include <queue>
 using namespace std;
 struct Node {
 	int key = 0;
@@ -70,35 +69,56 @@ Node* findMin(Node* root)
 		return root;
 	return findMin(root->left);
 }
+
+void removeTree(Node*& root)
+{
+	if (root == nullptr) return;
+	removeTree(root->left);
+	removeTree(root->right);
+	delete root;
+}
+
 void remove(Node*& root, int x)
 {
 	if (root == nullptr) return;
+	
+	// All nodes in left are less than x => remove the left subtree
+	if (root->key < x)
+		removeTree(root->left);
+	else remove(root->left,x);
 
-	if (root->key < x) remove(root->left, x);
-	else if (root->key > x)remove(root->right, x);
-	if (root->left == nullptr && root->right == nullptr) {
-		root = nullptr;
-		return;
+	// Call remove function with the right subtree to find the nodes < x
+	remove(root->right, x);
+
+	// Check current node
+	if (root->key < x) {
+		if (root->left == nullptr && root->right == nullptr) {
+			root = nullptr;
+			return;
+		}
+		if (root->left == nullptr) {
+			Node* tmp = root;
+			root = root->right;
+			delete tmp;
+			return;
+		}
+		if (root->right == nullptr) {
+			Node* tmp = root;
+			root = root->left;
+			delete tmp;
+			return;
+		}
+		//2 children
+		Node* tmp = findMin(root->right);
+		root->key = tmp->key;
+		remove(root->right, tmp->key);
 	}
-	if (root->left == nullptr) {
-		Node* tmp = root;
-		root = root->right;
-		delete tmp;
-		return;
-	}
-	if (root->right == nullptr) {
-		Node* tmp = root;
-		root = root->left;
-		delete tmp;
-		return;
-	}
-	//2 children
-	Node* tmp = findMin(root->right);
-	root->key = tmp->key;
-	remove(root->right, tmp->key);
 }
 int main()
 {
 	int a[] = { 1,2,34,3,62 };
 	int n = 5;
+	Node* root = createTree(a, n);
+	remove(root, 4);
+	NLR(root);
 }
