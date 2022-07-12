@@ -111,7 +111,7 @@ Node* createAVLTree(int a[], int n)
 }
 int main()
 {
-	int a[] = { 10, 20, 30, 40, 50, 25};
+	int a[] = { 10, 20, 30, 40, 50, 25 };
 	int n = 6;
 	Node* root = createAVLTree(a, n);
 	NLR(root);
