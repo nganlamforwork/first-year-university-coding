@@ -16,6 +16,21 @@ Node* createNode(int data)
 	p->height = 1;
 	return p;
 }
+
+void levelOrder(Node* root)
+{
+	if (root == nullptr) return;
+	queue<Node*> q;
+	q.push(root);
+	while (!q.empty()) {
+		Node* front = q.front();
+		q.pop();
+		cout << front->key << ' ';
+		if (front->left != nullptr) q.push(front->left);
+		if (front->right != nullptr) q.push(front->right);
+	}
+}
+
 int height(Node* root)
 {
 	if (root == nullptr) return 0;
@@ -109,11 +124,82 @@ Node* createAVLTree(int a[], int n)
 		root = insert(root, a[i]);
 	return root;
 }
+
+Node* minValueNode(Node* root)
+{
+	Node* p = root;
+	while (p->left != nullptr)
+		p = p->left;
+	return p;
+}
+
+Node* Remove(Node*& root, int x)
+{
+	if (root == nullptr)
+		return root;
+	
+	if (x < root->key)
+		root->left = Remove(root->left, x);
+	else if (x > root->key)
+		root->right = Remove(root->right, x);
+	else {
+		if ((root->left == nullptr) || (root->right == nullptr)) {
+			Node* tmp = root->left ? root->left : root->right;
+			if (tmp == nullptr) {
+				tmp = root;
+				root = nullptr;
+			}
+			else
+				*root = *tmp;
+			delete tmp;
+		}
+		else {
+			Node* tmp = minValueNode(root->right);
+			swap(root->key,tmp->key);
+			root->right = Remove(root->right, x);
+		}
+	}
+	if (root == nullptr) return root;
+
+	root->height = 1 + max(height(root->left), height(root->right));
+	int balance = getBalance(root);
+	// Left Left Case
+	if (balance > 1 &&
+		getBalance(root->left) >= 0)
+		return rightRotate(root);
+
+	// Left Right Case
+	if (balance > 1 && getBalance(root->left) < 0) {
+		root->left = leftRotate(root->left);
+		return rightRotate(root);
+	}
+
+	// Right Right Case
+	if (balance < -1 && getBalance(root->right) <= 0)
+		return leftRotate(root);
+
+	// Right Left Case
+	if (balance < -1 && getBalance(root->right) > 0) {
+		root->right = rightRotate(root->right);
+		return leftRotate(root);
+	}
+
+	return root;
+}
+
+bool isAVL(Node* root)
+{
+	if (root == nullptr) return 1;
+	if (abs(getBalance(root)) > 1) return 0;
+	return isAVL(root->right) && isAVL(root->left);
+}
+
 int main()
 {
 	int a[] = { 10, 20, 30, 40, 50, 25 };
 	int n = 6;
 	Node* root = createAVLTree(a, n);
-	NLR(root);
+	Remove(root, 20);
+	levelOrder(root);
 	return 0;
 }
